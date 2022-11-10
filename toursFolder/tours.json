@@ -1,0 +1,41 @@
+[
+  {
+    "id":4,
+    "name": "The Forest Hiker",
+    "duration": 5,
+    "maxGroupSize": 25,
+    "difficulty": "easy",
+    "ratingAverage": 4.7,
+    "ratingQuantity": 37,
+    "price": 397,
+    "summary": "Breath-taking hikes throuh the Nigerian forest",
+    "description": "jjhjsfksffksjsfkjkjfkjjkfjmsfksfjkffn,f,kxmnfskfnsfkjsfnmsfjksfnsjskfksjksfsfnmxbmcsmfbfhfjhfnmfjmfhfwkjlwkjljlsjdljkliosfjdj,djljljlsdjlsjlsjlsjlsrjlrjlsrjlwejljrrwjwruowruo"
+  },
+  {
+    "id":5,
+    "name": "The Forest Mamber",
+    "duration": 7,
+    "maxGroupSize": 20,
+    "difficulty": "medium",
+    "ratingAverage": 3.2,
+    "ratingQuantity": 30,
+    "price": 322,
+    "summary": "Breath-taking hikes throuh the Canadian forest",
+    "description": "jjhedkwejhwejkwenwejkwenwejkwejknwejkekwejkwejkesjksdnmsdnmdjksdhsejkseuiseuisejsfnmfnmfjkfusduisduijlsdjksjkfkhsfjksfksfjkfsjksdfjksdjksfiaeioaeioaejkaejkjkaejaejlaelaejlaejla"
+  },
+  {
+    "id":6,
+    "name": "The Forest Groove",
+    "duration": 3,
+    "maxGroupSize": 50,
+    "difficulty": "medium",
+    "ratingAverage": 4.2,
+    "ratingQuantity": 41,
+    "price": 652,
+    "summary": "Breath-taking hikes throuh the American forest",
+    "description": "jjhedkwejhwejkwenwejkwenwejkwejknwejkekwejkwejkesjksdnmsdnmdjksdhsejkseuiseuisejsfnmfnmfjkfusduisduijsjksfufjkrioweioejdmzdioadjeioejkeioejkweiorjkerujknsdfnmsfnkfuisioejnsfnfusj"
+  },
+  { "id": 1, "name": "jumbo", "duration": 10, "difficulty": "easy" },
+  { "id": 2, "name": "Jadon", "duration": 15, "difficulty": "medium" },
+  { "id": 3, "name": "Ekene", "duration": 15, "difficulty": "medium" }
+]
