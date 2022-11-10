@@ -1,6 +1,7 @@
 const express = require('express');
-const fs = require('fs');
-const morgan = require('morgan')
+const morgan = require('morgan');
+const tourRouter = require('./routes/tourRoute');
+const userRouter = require('./routes/userRoute');
 
 const app = express();
 const port = 3000;
@@ -22,111 +23,9 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
     req.requestTime = new Date().toISOString();
     next()
-})
-
-const tours = JSON.parse(fs.readFileSync(`${__dirname}/toursFolder/tours.json`));
-
-// Route handlers
-const getAllTour = (req, res) => {
-    //We can access the req.requestTime inside this function ie
-    res.status(200).json({
-        status: "success",
-        requestedAt: req.requestTime,
-        numberOfTours: tours.length,
-        data: {
-            tours,
-        }
-    })
-}
-
-const getTour = (req, res) => {
-    // console.log(+(req.params.id))
-    const id = +(req.params.id);
-    const tour = tours.find(el => el.id === id)
-    // if (id > tours.length) {
-    if (!tour) {
-        return res.status(404).json({
-            status: 'Not found',
-            message: 'Invalid search ID'
-        })
-    }
-    res.status(200).json({
-        status: "success",
-        data: {
-            tour,
-        }
-    });
-}
-
-const updateTour = (req, res) => {
-    const id = +(req.params.id);
-    const tour = tours.find(el => el.id === id)
-    if (id > tours.length) {
-        return res.status(404).json({
-            status: 'Not found',
-            message: 'Invalid search ID'
-        })
-    }
-    res.status(200).json({
-        status: "success",
-        data: {
-            tour: 'Tour Updated'
-        }
-    });
-}
-
-const createTour = (req, res) => {
-    // console.log(req.body);
-    const newId = tours[tours.length - 1].id + 1
-    const newTour = Object.assign({id: newId}, req.body);
-    tours.push(newTour);
-
-    fs.writeFile(`${__dirname}/toursFolder/tours.json`, JSON.stringify(tours), err => {
-        res.status(201).json({
-            status: 'success',
-            data: {
-                newTour
-            }
-        })
-    })
-}
-
-const getAllUsers = (req, res) => {
-    res.status(500).json({
-        status: 'Error',
-        message: "This route is not yet defined!"
-    })
-}
-
-const createUser = (req, res) => {
-    res.status(500).json({
-        status: 'Error',
-        message: "This route is not yet defined!"
-    })
-}
-const getUser = (req, res) => {
-    res.status(500).json({
-        status: 'Error',
-        message: "This route is not yet defined!"
-    })
-}
-const updateUser = (req, res) => {
-    res.status(500).json({
-        status: 'Error',
-        message: "This route is not yet defined!"
-    })
-}
+});
 
 // Routes
-const tourRouter = express.Router();
-const userRouter = express.Router();
-
-tourRouter.route('/').post(createTour).get(getAllTour);
-tourRouter.route('/:id').get(getTour).patch(updateTour);
-
-userRouter.route('/').get(getAllUsers).post(createUser);
-userRouter.route('/:id').get(getUser).patch(updateUser);
-
 // Parent route using mounting which in this case is the tourRouter and userRouter
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
@@ -135,8 +34,4 @@ app.use('/api/v1/users', userRouter);
 // app.get('/api/v1/tours/:id', getTour);
 // app.patch('/api/v1/tours/:id', updateTour)
 // app.post('/api/v1/tours', createTour)
-
-// Start server
-app.listen(port, () => {
-    console.log(`app running on port ${port}...`)
-})
+module.exports = app;
