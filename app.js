@@ -1,3 +1,5 @@
+//Everything that has nothing to do with express should be done outside the app.js file ie in the server.js file
+
 const express = require('express');
 const morgan = require('morgan');
 const tourRouter = require('./routes/tourRoute');
@@ -10,6 +12,10 @@ const app = express();
 app.use(express.json());
 // Morgan middleware is used to log requests to the console
 app.use(morgan('dev'));
+
+//To serve static files we use an inbuilt middleware called express.ststic(with the directory) ie
+// Then you open the route with server/publicContent it http://localhost:3000/index.html
+app.use(express.static(`${__dirname}/public`));
 
 // To create our own middleWare functions, we must use app.use to access the middleware eg
 // All middlewares execute based on the order they are called. Also with next(), it makes the next middleware run cos without it, the next wont run.
