@@ -28,7 +28,28 @@ const Tour = require("../models/tourModel")
 
 exports.getAllTour = async (req, res) => {
   try {
-    const tours = await Tour.find();
+    // BUILD QUERY
+    //1) FILTERING
+    const queryObj = { ...req.query }
+    console.log("Query Object", queryObj);
+    // This excludedFields tries to exclude page, sort, etc from the query
+    const excludedFields = ['page', 'sort', 'limit', 'fields'];
+    excludedFields.forEach(el => delete queryObj[el]);
+
+    //ADVANCED FILTERING ie using greaterThanorEqualsTo(gte);
+    let queryString = JSON.stringify(queryObj);
+    //We want to replace gte, gt, lte, lt as it is coming without the $ sign with mongoose($gte, $gt, $lte, $lt)
+    // In regex we use the g sign at the end so that we can get the occurence multiple times, if not we would only get the first occurence.
+    //replace fxn accepts 2 parameters. We use it here to match what we have b4 to what we have presently.
+    queryString = queryString.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+    console.log(JSON.parse(queryString));
+
+    // const tours = await Tour.find()
+    // EXECUTE QUERY
+    const query = Tour.find(JSON.parse(queryString));
+    const tours = await query
+    // const tours = Tour.find().where("rating").equals(5.1).where("name").equals("Ekene");
+    // SEND RESPONSE
     res.status(200).json({
       status: "success",
       numberOfTours: tours.length,
@@ -75,16 +96,26 @@ exports.getTour = async (req, res) => {
 
 };
 
-exports.updateTour = (req, res) => {
+exports.updateTour = async (req, res) => {
+  try {
+    const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
+    })
+    res.status(200).json({
+      status: "success",
+      data: {
+        tour: tour,
+      },
+    });
+  } catch(error) {
+    res.status(404).json({
+      status: 'Failed',
+      message: error
+    })
+  }
   // const id = +(req.params.id);
-  // const tour = tours.find(el => el.id === id)
-
-  res.status(200).json({
-    status: "success",
-    // data: {
-    //   tour: "Tour Updated",
-    // },
-  });
+  // const tour = tours.find(el => el.id === id)  
 };
 
 exports.createTour = async (req, res) => {
@@ -107,4 +138,21 @@ exports.createTour = async (req, res) => {
       message: error
     })
   }
+};
+
+exports.deleteTour = async (req, res) => {
+  try {
+    await Tour.findByIdAndDelete(req.params.id, req.body)
+    res.status(204).json({
+      status: "success",
+      data: null
+    });
+  } catch(error) {
+    res.status(404).json({
+      status: 'Failed',
+      message: error
+    })
+  }
+  // const id = +(req.params.id);
+  // const tour = tours.find(el => el.id === id)  
 };

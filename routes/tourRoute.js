@@ -13,6 +13,7 @@ router.route('/')
 
 router.route('/:id')
 .get(tourControllers.getTour)
-.patch(tourControllers.updateTour);
+.patch(tourControllers.updateTour)
+.delete(tourControllers.deleteTour);
 
 module.exports = router;
