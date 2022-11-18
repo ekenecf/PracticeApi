@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 // we create models out of schemas
 const tourSchema = new mongoose.Schema({
+    //To remove a parameter, you use select:false
     name: {
       type: String,
       required: [true, 'A tour must have a name'],
@@ -60,4 +61,3 @@ const tourSchema = new mongoose.Schema({
   const Tour = mongoose.model('Tour', tourSchema);
 
   module.exports = Tour;
-  
